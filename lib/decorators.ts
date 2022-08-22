@@ -71,6 +71,11 @@ const _params = (type: string, parameters: { [name: string]: any }) => (
   return descriptor;
 };
 
+const notOverwriteBySwaggerRoute = () => (target: any, name: string, descriptor: PropertyDescriptor) => {
+  descriptor.value.notOverwrite = true;
+  return descriptor
+}
+
 const request = (method: string, path: string) => (
   target: any,
   name: string,
@@ -204,7 +209,11 @@ const queryAll = (parameters: { [name: string]: any }, filters = ['ALL']) => (ta
   });
   swaggerObject.addMulti(target, { query: swaggerParameters }, filters);
 };
+
+
+
 const Doc = {
+  notOverwriteBySwaggerRoute,
   request,
   summary,
   params,
@@ -233,6 +242,7 @@ const Doc = {
 export default Doc;
 
 export {
+  notOverwriteBySwaggerRoute,
   request,
   summary,
   params,

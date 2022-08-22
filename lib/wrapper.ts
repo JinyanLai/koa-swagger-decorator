@@ -181,8 +181,8 @@ const handleMap = (
   [...staticMethods, ...methods]
     // filter methods withour @request decorator
     .filter((item) => {
-      const { path, method } = item;
-      if (!path && !method) {
+      const { path, method, notOverwrite } = item;
+      if (!path && !method || notOverwrite) {
         return false;
       }
       return true;
